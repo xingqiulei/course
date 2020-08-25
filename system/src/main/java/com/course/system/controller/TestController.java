@@ -1,14 +1,16 @@
 package com.course.system.controller;
 
+import com.course.server.domain.Test;
 import com.course.server.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
-@RequestMapping("/system")
+/*@RequestMapping("/system")*/
 public class TestController {
 
     @Resource
@@ -16,7 +18,7 @@ public class TestController {
 
     @RequestMapping("/test")
     @ResponseBody
-     public String test(){
-         return  "success";
+     public List<Test> test(){
+         return  testService.list();
      }
 }
