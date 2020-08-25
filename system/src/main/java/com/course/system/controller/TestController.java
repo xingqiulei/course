@@ -1,22 +1,22 @@
 package com.course.system.controller;
 
-import com.course.system.domain.Test;
-import com.course.system.service.TestService;
+import com.course.server.service.TestService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.List;
 
-@RestController
+@Controller
+@RequestMapping("/system")
 public class TestController {
 
     @Resource
     private TestService testService;
 
     @RequestMapping("/test")
-    public List<Test> test(){
-        return testService.list() ;
-    }
-
+    @ResponseBody
+     public String test(){
+         return  "success";
+     }
 }
