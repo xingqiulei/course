@@ -6,10 +6,9 @@
 
 <script>
     export default {
-        name: "welcome"
+        name: "welcome",
+        mounted() {
+        }
+
     }
 </script>
-
-<style scoped>
-
-</style>

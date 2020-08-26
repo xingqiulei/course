@@ -1,6 +1,6 @@
-package com.course.business.controller;
+package com.course.business.controller.admin;
 
-import com.course.server.domain.Chapter;
+import com.course.server.dto.ChapterDto;
 import com.course.server.service.ChapterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,15 +10,15 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-/*@RequestMapping("/system")*/
+@RequestMapping("/admin/chapter")
 public class ChapterController {
 
     @Resource
     private ChapterService chapterService;
 
-    @RequestMapping("/chapter")
+    @RequestMapping("/list")
     @ResponseBody
-     public List<Chapter> chapter(){
+     public List<ChapterDto> list(){
          return  chapterService.list();
      }
 }
