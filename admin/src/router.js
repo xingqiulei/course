@@ -1,8 +1,8 @@
 import Vue from "vue"
 import Router from "vue-router"
 import Login from "./views/login.vue"
-/*import Admin from "./views/admin.vue"
-import Welcome from "./views/admin/welcome.vue"
+import Admin from "./views/admin.vue"
+/*import Welcome from "./views/admin/welcome.vue"
 import Category from "./views/admin/category.vue"
 import Course from "./views/admin/course.vue"
 import Chapter from "./views/admin/chapter.vue"
@@ -24,11 +24,11 @@ export default new Router({
     routes: [{
         path: "*",
         redirect: "/login",
-    }, {
-        path: "",
-        redirect: "/login",
-    }, {
+    },{
         path: "/login",
         component: Login
+    },{
+        path: "/admin",
+        component: Admin
     }]
 })
