@@ -3,6 +3,7 @@ package com.course.server.mapper;
 import com.course.server.domain.Chapter;
 import com.course.server.domain.ChapterExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ChapterMapper {
