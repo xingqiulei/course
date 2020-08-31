@@ -91,9 +91,6 @@
         },
         mounted() {
             let _this=this;
-/*
-            _this.$refs.pagination.size=5;
-*/
             _this.list(1);
         },
         methods:{
@@ -125,25 +122,36 @@
 
             save(page){
                 let _this=this;
-                debugger
+                // 保存校验
+                if (!Validator.require(_this.chapter.name, "名称")
+                    || !Validator.length(_this.chapter.courseId, "课程ID", 1, 8)) {
+                    return;
+                }
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',_this.chapter).then((response)=>{
                     console.log("添加大章结果",response);
                     let res=response.data;
                     if(res.success){
                         $("#form-modal").modal("hide");
-                        _this.list(1);
+                       _this.list(1);
+                        Toast.success("保存成功");
+                    }else{
+                        Toast.warning(res.message)
                     }
                 })
             },
             del(id){
                 let _this=this;
-                _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response)=>{
-                    console.log("删除大章结果",response);
-                    let res=response.data;
-                    if(res.success){
-                        _this.list(1);
-                    }
-                })
+                Confirm.show("删除大章后不可恢复",function () {
+                    _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response)=>{
+                        console.log("删除大章结果",response);
+                        let res=response.data;
+                        if(res.success){
+                            _this.list(1);
+                            Toast.success("删除成功");
+                        }
+                    })
+
+                });
             }
         }
 
