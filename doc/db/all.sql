@@ -23,17 +23,19 @@ create table 'section'(
 #课程表
 drop table if exists course;
 create table course(
-    id char(8)not null primary key default '' comment "id",
-    name varchar(255)  comment '名称',
-    summary varchar(255) comment '概述',
-    time int default 0 comment '时长|单位秒',
-    price decimal(8,2) default 0.00 comment '价格',
-    image varchar(255)comment '封面',
-    level char(1)  comment '级别|ONE（"1","初级"）,TWO("2","中级"),THREE("3","高级")',
-    charge char (1)comment '收费|charge("C","收费"),FREE("F","免费")',
-    status char(1) comment '状态|PUBLISH("P","发布"),DRAFT("D","草稿")',
-    enroll INTEGER default 0 comment '报名数',
-    sort int comment '顺序',
-    created_at datetime(3) comment '创建时间',
-    updated_at datetime(3) comment  '修改时间'
+    drop table if exists course;
+create table course(
+   id char(8)not null primary key default '' comment "id",
+   name varchar(255)  comment '名称',
+   summary varchar(255) comment '概述',
+   time int default 0 comment '时长|单位秒',
+   price decimal(8,2) default 0.00 comment '价格',
+   image varchar(255)comment '封面',
+   level char(1)  comment '级别|枚举[CourseLevelEnum]:ONE（"1","初级"）,TWO("2","中级"),THREE("3","高级")',
+   charge char (1)comment '收费|枚举[CourseChargeEnum]:charge("C","收费"),FREE("F","免费")',
+   status char(1) comment '状态|枚举[CourseStatusEnum]:PUBLISH("P","发布"),DRAFT("D","草稿")',
+   enroll INTEGER default 0 comment '报名数',
+   sort int comment '顺序',
+   created_at datetime(3) comment '创建时间',
+   updated_at datetime(3) comment  '修改时间'
 )engine=innodb default charset='utf8mb4' comment="课程表";
