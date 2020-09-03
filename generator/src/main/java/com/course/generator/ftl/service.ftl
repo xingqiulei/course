@@ -40,16 +40,12 @@ public class ${Domain}Service {
             List <${Domain}> ${domain}List=${domain}Mapper.selectByExample(${domain}Example);
             PageInfo <${Domain}>pageInfo=new PageInfo<${Domain}>(${domain}List);
             pageDto.setTotal(pageInfo.getTotal());
-            List<${Domain}Dto> ${domain}DtoList=new ArrayList<>();
-        for (int i = 0,l=${domain}List.size();i <l;i++) {
-            ${Domain} ${domain} =${domain}List.get(i);
-            ${Domain}Dto ${domain}Dto=new ${Domain}Dto();
-            BeanUtils.copyProperties(${domain},${domain}Dto);
-            ${domain}DtoList.add(${domain}Dto);
-        }
-        pageDto.setList(${domain}DtoList);
+            List<${Domain}Dto>${domain}DtoList=CopyUtil.copyList(${domain}List,${Domain}Dto.class);
+            pageDto.setList(${domain}DtoList);
     }
 
+    
+    
     /**
      * 保存，id有值时更新，无值时新增
      */

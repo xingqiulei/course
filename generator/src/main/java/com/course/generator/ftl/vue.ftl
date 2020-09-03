@@ -39,7 +39,9 @@
       <tbody>
       <tr v-for="${domain} in ${domain}s">
         <#list fieldList as field>
-          <td>{{${domain}.${field.nameHump}}}</td>
+          <#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
+            <td>{{${domain}.${field.nameHump}}}</td>
+          </#if>
         </#list>
         <td>
           <div class="hidden-sm hidden-xs btn-group">
@@ -93,7 +95,7 @@
   import Pagination from "../../components/pagination";
   export default {
     components: {Pagination},
-    name: "${domain}",
+    name: "${module}-${domain}",
     data: function() {
       return {
         ${domain}: {},

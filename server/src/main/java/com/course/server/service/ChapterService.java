@@ -9,12 +9,10 @@ import com.course.server.util.CopyUtil;
 import com.course.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,15 +27,8 @@ public class ChapterService {
             List <Chapter> chapterList=chapterMapper.selectByExample(chapterExample);
             PageInfo <Chapter>pageInfo=new PageInfo<Chapter>(chapterList);
             pageDto.setTotal(pageInfo.getTotal());
-            List<ChapterDto> chapterDtoList=new ArrayList<>();
-        for (int i = 0,l=chapterList.size();i <l; i++) {
-            Chapter chapter =chapterList.get(i);
-            ChapterDto chapterDto=new ChapterDto();
-            BeanUtils.copyProperties(chapter,chapterDto);
-            chapterDtoList.add(chapterDto);
-        }
-        pageDto.setList(chapterDtoList);
-
+           List<ChapterDto>chapterDtoList=CopyUtil.copyList(chapterList,ChapterDto.class);
+           pageDto.setList(chapterDtoList);
     }
 
     /**
