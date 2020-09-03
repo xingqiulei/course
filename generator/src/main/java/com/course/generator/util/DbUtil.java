@@ -77,14 +77,14 @@ public class DbUtil {
                 } else {
                     field.setNameCn(comment);
                 }
-            /*    field.setNullAble("YES".equals(nullAble));
+                field.setNullAble("YES".equals(nullAble));
                 if (type.toUpperCase().contains("varchar".toUpperCase())) {
                     String lengthStr = type.substring(type.indexOf("(") + 1, type.length() - 1);
                     field.setLength(Integer.valueOf(lengthStr));
                 } else {
                     field.setLength(0);
-                }*/
-                /*if (comment.contains("枚举")) {
+                }
+         /*       if (comment.contains("枚举")) {
                     field.setEnums(true);
 
                     // 以课程等级为例：从注释中的“枚举[CourseLevelEnum]”，得到COURSE_LEVEL
