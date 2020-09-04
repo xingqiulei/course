@@ -25,9 +25,10 @@ public class SectionController {
      * 列表查询
      */
     @RequestMapping("/list")
+    @ResponseBody
     public ResponseDto list(@RequestBody SectionPageDto sectionPageDto) {
         ResponseDto responseDto = new ResponseDto();
-   /*     ValidatorUtil.require(sectionPageDto.getCourseId(), "课程ID");
+      /*  ValidatorUtil.require(sectionPageDto.getCourseId(), "课程ID");
         ValidatorUtil.require(sectionPageDto.getChapterId(), "大章ID");*/
         sectionService.list(sectionPageDto);
         responseDto.setContent(sectionPageDto);

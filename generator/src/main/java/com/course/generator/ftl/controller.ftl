@@ -24,7 +24,7 @@ public static final String BUSINESS_NAME = "${tableNameCn}";
 
     @RequestMapping("/list")
     @ResponseBody
-     public ResponseDto list( PageDto pageDto){
+     public ResponseDto list(@RequestBody PageDto pageDto){
         ResponseDto responseDto=new ResponseDto();
            ${domain}Service.list(pageDto);
         responseDto.setContent(pageDto);

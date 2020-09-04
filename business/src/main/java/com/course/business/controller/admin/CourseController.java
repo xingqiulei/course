@@ -27,7 +27,7 @@ public static final String BUSINESS_NAME = "课程表";
 
     @RequestMapping("/list")
     @ResponseBody
-     public ResponseDto list( PageDto pageDto){
+     public ResponseDto list(@RequestBody PageDto pageDto){
         ResponseDto responseDto=new ResponseDto();
            courseService.list(pageDto);
         responseDto.setContent(pageDto);
