@@ -416,6 +416,15 @@
 
                         <ul class="submenu">
 
+                            <li class="active" id="business-category-sidebar">
+                                <router-link to="/business/category" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    分类管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
+
                             <li class="active" id="business-course-sidebar">
                                 <router-link to="/business/course" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
@@ -424,7 +433,16 @@
                                 </router-link>
                                 <b class="arrow"></b>
                             </li>
-                            <li class="active" id="business-chapter-sidebar">
+
+                            <li class="active" id="business-teacher-sidebar">
+                                <router-link to="/business/teacher" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    讲师管理
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
+<!--                            <li class="active" id="business-chapter-sidebar">
                                 <router-link to="/business/chapter" class="dropdown-toggle">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     大章管理
@@ -439,7 +457,7 @@
                                     <b class="arrow fa fa-angle-down"></b>
                                 </router-link>
                                 <b class="arrow"></b>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                 </ul><!-- /.nav-list -->

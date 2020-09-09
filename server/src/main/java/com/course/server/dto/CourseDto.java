@@ -1,8 +1,10 @@
 package com.course.server.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.List;
 
 public class CourseDto {
 
@@ -72,6 +74,16 @@ public class CourseDto {
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updatedAt;
+
+    private List<CategoryDto> categorys;
+
+    public void setCategorys(List<CategoryDto> categorys) {
+        this.categorys = categorys;
+    }
+
+    public List<CategoryDto> getCategorys() {
+        return categorys;
+    }
 
     public String getId() {
         return id;
@@ -197,6 +209,7 @@ public class CourseDto {
         sb.append(", sort=").append(sort);
         sb.append(", createdAt=").append(createdAt);
         sb.append(", updatedAt=").append(updatedAt);
+        sb.append(", categorys=").append(categorys);
         sb.append("]");
         return sb.toString();
     }

@@ -1,3 +1,6 @@
+/**
+  大章表
+ */
 drop table   if exists  'chapter';
 create table  'chapter'(
    'id' char (8) not null  comment 'id',
@@ -6,6 +9,9 @@ create table  'chapter'(
    primary  key ('id')
 )engine=innodb  default charset=utf8mb4 comment='大章';
 
+/**
+  小节表
+ */
 drop table if exists 'section';
 create table 'section'(
   'id' CHAR(8) not null  default '' comment 'id'，
@@ -23,8 +29,6 @@ create table 'section'(
 #课程表
 drop table if exists course;
 create table course(
-    drop table if exists course;
-create table course(
    id char(8)not null primary key default '' comment "id",
    name varchar(255)  comment '名称',
    summary varchar(255) comment '概述',
@@ -39,3 +43,43 @@ create table course(
    created_at datetime(3) comment '创建时间',
    updated_at datetime(3) comment  '修改时间'
 )engine=innodb default charset='utf8mb4' comment="课程表";
+
+/**
+  分类表
+ */
+create table category(
+ id char(8)not null  primary key default '' comment 'id',
+ parent char(8) not null default '' comment '父id',
+ name varchar(255) not null comment '分类名称',
+ sort  int comment '顺序'
+)engine=innodb default charset='utf8mb4' comment="分类表";
+
+
+/**
+  课程分类表
+ */
+drop table if exists course_category;
+create table course_category(
+    id char(8)not null  primary key default '' comment 'id',
+    course_id char(8)  comment '课程|course.id',
+    category_id char(8)  comment '分类|course.id'
+)engine=innodb default charset='utf8mb4' comment="课程分类表";
+
+#课程内容表
+drop table if exists course_content;
+create table course_content(
+   id char(8)not null  primary key default '' comment '课程id',
+   content MEDIUMTEXT not null  comment '课程内容'
+)engine=innodb default charset='utf8mb4' comment="课程内容";
+
+#讲师表
+drop table if exists teacher;
+create table teacher(
+    id char(8)not null  primary key default '' comment '教师d',
+    name varchar(50)not null comment '姓名',
+    nickname varchar(50) comment '昵称',
+    image varchar(100)comment '头像',
+    position varchar(50) comment '职位',
+    motto varchar(50) comment '座右铭',
+    intro varchar(500) comment '简介'
+)engine=innodb default charset='utf8mb4' comment="讲师";

@@ -1,16 +1,13 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div>
-    <h4 class="lighter">
-      <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-      <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
-    </h4>
+      <h4 class="lighter">
+          <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+          <router-link to="/business/course" class="pink"> {{course.name}} </router-link>：
+          <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+          <router-link to="/business/chapter" class="pink"> {{chapter.name}} </router-link>
+      </h4>
     <hr>
-    <p>
-      <router-link to="/business/course" class="btn btn-white btn-default btn-round">
-        <i class="ace-icon fa fa-arrow-left"></i>
-        返回课程
-      </router-link>
-      &nbsp;
+    <p>&nbsp;
       <button v-on:click="add()" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-edit"></i>
         新增
@@ -40,9 +37,7 @@
       <tr v-for="section in sections">
           <td>{{section.id}}</td>
           <td>{{section.title}}</td>
-          <td>{{section.courseId}}</td>
-          <td>{{section.chapterId}}</td>
-          <td>{{section.time}}</td>
+          <td>{{section.time | formatSecond}}</td>
           <td>{{section.video}}</td>
           <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
           <td>{{section.sort}}</td>
@@ -137,18 +132,21 @@
       return {
         section: {},
         sections: [],
-        course: {},
+          course: {},
+          chapter: {},
           SECTION_CHARGE: SECTION_CHARGE,
       }
     },
     mounted: function() {
       let _this = this;
       _this.$refs.pagination.size = 5;
-      /*    let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
-          if (Tool.isEmpty(course)) {
-              _this.$router.push("/welcome");
-          }
-          _this.course = course;*/
+        let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
+        let chapter = SessionStorage.get(SESSION_KEY_CHAPTER) || {};
+        if (Tool.isEmpty(course) || Tool.isEmpty(chapter)) {
+            _this.$router.push("/welcome");
+        }
+        _this.course = course;
+        _this.chapter = chapter;
       _this.list(1);
       // sidebar激活样式方法一
       this.$parent.activeSidebar("business-course-sidebar");
@@ -177,19 +175,20 @@
        * 列表查询
        */
       list(page) {
-        let _this = this;
-        Loading.show();
-        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/section/list', {
-          page: page,
-          size: _this.$refs.pagination.size,
-          courseId: _this.course.id
-        }).then((response)=>{
-          Loading.hide();
-          let resp = response.data;
-          _this.sections = resp.content.list;
-          _this.$refs.pagination.render(page, resp.content.total);
+          let _this = this;
+          Loading.show();
+          _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/section/list', {
+              page: page,
+              size: _this.$refs.pagination.size,
+              courseId: _this.course.id,
+              chapterId: _this.chapter.id
+          }).then((response)=>{
+              Loading.hide();
+              let resp = response.data;
+              _this.sections = resp.content.list;
+              _this.$refs.pagination.render(page, resp.content.total);
 
-        })
+          })
       },
 
       /**
@@ -207,9 +206,8 @@
           ) {
               return;
           }
-
-        _this.section.courseId = _this.course.id;
-
+          _this.section.courseId = _this.course.id;
+          _this.section.chapterId = _this.chapter.id;
         Loading.show();
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/section/save', _this.section).then((response)=>{
           Loading.hide();
@@ -242,14 +240,6 @@
         });
       },
 
-      /**
-       * 点击【小节】
-       */
-      /*       toSection(section) {
-                 let _this = this;
-                 SessionStorage.set(SESSION_KEY_CHAPTER, section);
-                 _this.$router.push("/business/section");
-             }*/
     }
   }
 </script>

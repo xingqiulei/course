@@ -1,16 +1,6 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml">
+<template>
   <div>
-    <h4 class="lighter">
-      <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
-      <router-link to="/${module}/course" class="pink"> {{course.name}} </router-link>
-    </h4>
-    <hr>
     <p>
-      <router-link to="/${module}/course" class="btn btn-white btn-default btn-round">
-        <i class="ace-icon fa fa-arrow-left"></i>
-        返回课程
-      </router-link>
-      &nbsp;
       <button v-on:click="add()" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-edit"></i>
         新增
@@ -27,9 +17,9 @@
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
-        <#list fieldList as field>
+      <#list fieldList as field>
           <#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
-            <th>${field.nameCn}</th>
+        <th>${field.nameCn}</th>
           </#if>
         </#list>
         <th>操作</th>
@@ -41,25 +31,22 @@
         <#list fieldList as field>
           <#if field.nameHump!="createdAt" && field.nameHump!="updatedAt">
             <#if field.enums>
-              <td>{{${field.enumsConst} | optionKV(${domain}.${field.nameHump})}}</td>
+        <td>{{${field.enumsConst} | optionKV(${domain}.${field.nameHump})}}</td>
             <#else>
-              <td>{{${domain}.${field.nameHump}}}</td>
+        <td>{{${domain}.${field.nameHump}}}</td>
             </#if>
           </#if>
         </#list>
-        <td>
-          <div class="hidden-sm hidden-xs btn-group">
-            <button v-on:click="toSection(${domain})" class="btn btn-white btn-xs btn-info btn-round">
-              小节
-            </button>&nbsp;
-            <button v-on:click="edit(${domain})" class="btn btn-white btn-xs btn-info btn-round">
-              编辑
-            </button>&nbsp;
-            <button v-on:click="del(${domain}.id)" class="btn btn-white btn-xs btn-warning btn-round">
-              删除
-            </button>
-          </div>
-        </td>
+      <td>
+        <div class="hidden-sm hidden-xs btn-group">
+          <button v-on:click="edit(${domain})" class="btn btn-xs btn-info">
+            <i class="ace-icon fa fa-pencil bigger-120"></i>
+          </button>
+          <button v-on:click="del(${domain}.id)" class="btn btn-xs btn-danger">
+            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+          </button>
+        </div>
+      </td>
       </tr>
       </tbody>
     </table>
@@ -76,21 +63,21 @@
               <#list fieldList as field>
                 <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt">
                   <#if field.enums>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">${field.nameCn}</label>
-                      <div class="col-sm-10">
-                        <select v-model="${domain}.${field.nameHump}" class="form-control">
-                          <option v-for="o in ${field.enumsConst}" v-bind:value="o.key">{{o.value}}</option>
-                        </select>
-                      </div>
-                    </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">${field.nameCn}</label>
+                <div class="col-sm-10">
+                  <select v-model="${domain}.${field.nameHump}" class="form-control">
+                    <option v-for="o in ${field.enumsConst}" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
+                </div>
+              </div>
                   <#else>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">${field.nameCn}</label>
-                      <div class="col-sm-10">
-                        <input v-model="${domain}.${field.nameHump}" class="form-control">
-                      </div>
-                    </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">${field.nameCn}</label>
+                <div class="col-sm-10">
+                  <input v-model="${domain}.${field.nameHump}" class="form-control">
+                </div>
+              </div>
                   </#if>
                 </#if>
               </#list>
@@ -112,7 +99,7 @@
     components: {Pagination},
     name: "${module}-${domain}",
     data: function() {
-     return {
+      return {
         ${domain}: {},
         ${domain}s: [],
         <#list fieldList as field>
@@ -125,14 +112,9 @@
     mounted: function() {
       let _this = this;
       _this.$refs.pagination.size = 5;
-      /*    let course = SessionStorage.get(SESSION_KEY_COURSE) || {};
-          if (Tool.isEmpty(course)) {
-              _this.$router.push("/welcome");
-          }
-          _this.course = course;*/
       _this.list(1);
       // sidebar激活样式方法一
-      this.$parent.activeSidebar("${module}-course-sidebar");
+      // this.$parent.activeSidebar("${module}-${domain}-sidebar");
 
     },
     methods: {
@@ -163,7 +145,6 @@
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/${module}/admin/${domain}/list', {
           page: page,
           size: _this.$refs.pagination.size,
-          courseId: _this.course.id
         }).then((response)=>{
           Loading.hide();
           let resp = response.data;
@@ -176,27 +157,24 @@
       /**
        * 点击【保存】
        */
-      save(page) {
+      save() {
         let _this = this;
 
         // 保存校验
-        // 保存校验
         if (1 != 1
-                <#list fieldList as field>
-                <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
-                <#if !field.nullAble>
-                || !Validator.require(_this.${domain}.${field.nameHump}, "${field.nameCn}")
-                </#if>
-                <#if (field.length > 0)>
-                || !Validator.length(_this.${domain}.${field.nameHump}, "${field.nameCn}", 1, ${field.length?c})
-                </#if>
-                </#if>
-                </#list>
-                ) {
-                  return;
-                }
-
-        _this.${domain}.courseId = _this.course.id;
+        <#list fieldList as field>
+          <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">
+            <#if !field.nullAble>
+          || !Validator.require(_this.${domain}.${field.nameHump}, "${field.nameCn}")
+            </#if>
+            <#if (field.length > 0)>
+          || !Validator.length(_this.${domain}.${field.nameHump}, "${field.nameCn}", 1, ${field.length?c})
+            </#if>
+          </#if>
+        </#list>
+        ) {
+          return;
+        }
 
         Loading.show();
         _this.$ajax.post(process.env.VUE_APP_SERVER + '/${module}/admin/${domain}/save', _this.${domain}).then((response)=>{
@@ -228,16 +206,7 @@
             }
           })
         });
-      },
-
-      /**
-       * 点击【小节】
-       */
-      /*       toSection(${domain}) {
-                 let _this = this;
-                 SessionStorage.set(SESSION_KEY_CHAPTER, ${domain});
-                 _this.$router.push("/${module}/section");
-             }*/
+      }
     }
   }
 </script>
