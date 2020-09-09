@@ -7,12 +7,12 @@ import com.course.server.service.TeacherService;
 import com.course.server.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/admin/teacher")
 public class TeacherController {
 
@@ -24,6 +24,18 @@ public static final String BUSINESS_NAME = "讲师";
 
 
     private static final Logger LOG = LoggerFactory.getLogger(TeacherController.class);
+
+    /**
+     * 列表查询
+     */
+    @PostMapping("/all")
+    public ResponseDto all() {
+        ResponseDto responseDto = new ResponseDto();
+        List<TeacherDto> teacherDtoList = teacherService.all();
+        responseDto.setContent(teacherDtoList);
+        return responseDto;
+    }
+
 
     @RequestMapping("/list")
     @ResponseBody
