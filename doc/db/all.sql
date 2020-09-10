@@ -83,3 +83,17 @@ create table teacher(
     motto varchar(50) comment '座右铭',
     intro varchar(500) comment '简介'
 )engine=innodb default charset='utf8mb4' comment="讲师";
+
+
+#文件
+drop table if exists file;
+create table file(
+     id char(8)not null  primary key default '' comment 'id',
+     path varchar(100) not null  comment '相对路劲',
+     name varchar(100) comment '文件名',
+     suffix varchar(10) comment'后缀',
+     size int comment '大小|字节B',
+     `use` char(1) comment '用途|枚举[FileUseEnum]:COURSE("C","讲师"),TEACHER("T","课程")',
+     created_at datetime(3) comment '创建时间',
+     updated_at datetime(3) comment '修改时间'
+)engine=innodb default charset='utf8mb4' comment="文件";

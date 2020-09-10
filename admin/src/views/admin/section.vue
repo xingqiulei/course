@@ -26,7 +26,7 @@
       <tr>
           <th>ID</th>
           <th>标题</th>
-          <th>课程</th>
+          <th>VOD</th>
           <th>时长</th>
           <th>收费</th>
           <th>顺序</th>
@@ -37,8 +37,8 @@
       <tr v-for="section in sections">
           <td>{{section.id}}</td>
           <td>{{section.title}}</td>
+          <td>{{section.vod}}</td>
           <td>{{section.time | formatSecond}}</td>
-          <td>{{section.video}}</td>
           <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
           <td>{{section.sort}}</td>
         <td>
@@ -76,7 +76,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">课程</label>
                   <div class="col-sm-10">
-                    <input v-model="section.courseId" class="form-control" >
+                      <p class="form-control-static">{{course.name}}</p>
                   </div>
                 </div>
                 <div class="form-group">

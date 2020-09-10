@@ -121,7 +121,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
-                  <input v-model="teacher.image" class="form-control">
+                  <file v-bind:input-id="'image-upload'"
+                            v-bind:text="'上传头像'"
+                            v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                            v-bind:after-upload="afterUpload">
+                  </file>
+                  <div v-show="teacher.image" class="row">
+                    <div class="col-md-4">
+                      <img v-bind:src="teacher.image" class="img-responsive">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="form-group">
@@ -156,8 +165,10 @@
 
 <script>
   import Pagination from "../../components/pagination";
+  import File from "../../components/file";
+  import BigFile from "../../components/big-file";
   export default {
-    components: {Pagination},
+    components: {Pagination,File,BigFile},
     name: "business-teacher",
     data: function() {
       return {
@@ -259,6 +270,12 @@
             }
           })
         });
+      },
+
+      afterUpload(resp) {
+        let _this = this;
+        let image = resp.content.path;
+        _this.teacher.image = image;
       }
     }
   }
