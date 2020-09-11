@@ -70,6 +70,7 @@
           let resp = response.data;
           _this.files = resp.content.list;
           _this.$refs.pagination.render(page, resp.content.total);
+
         })
       },
     }

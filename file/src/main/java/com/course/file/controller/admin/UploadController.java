@@ -35,10 +35,8 @@ public class UploadController {
 @RequestMapping("/upload")
  public ResponseDto upload(@RequestParam MultipartFile file ) throws IOException {
      String fileName =file.getOriginalFilename();
-
-
      String key= UuidUtil.getShortUuid();
-     String suffix=fileName.substring(fileName.lastIndexOf(".") +1);
+     String suffix=fileName.substring(fileName.lastIndexOf(".") +1).toLowerCase();
      String path="teacher/" +key + "." +suffix;
      String fullPath =FILE_PATH + path;
      File dest =new File(fullPath);
