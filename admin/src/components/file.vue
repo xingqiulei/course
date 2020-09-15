@@ -35,13 +35,14 @@
     },
     methods: {
       uploadFile () {
+        debugger
         let _this = this;
         let formData = new window.FormData();
         let file = _this.$refs.file.files[0];
 
         // 判断文件格式
-        let suffixs = _this.suffixs;
-        let fileName = file.name;
+        let suffixs = _this.suffixs;  //声明文件后缀
+        let fileName = file.name;    //文件名称
         let suffix = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length).toLowerCase();
         let validateSuffix = false;
         for (let i = 0; i < suffixs.length; i++) {
@@ -60,7 +61,7 @@
         formData.append('file', file);
         formData.append('use', _this.use);
         Loading.show();
-        _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/upload', formData).then((response)=>{
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/file/admin/file/upload', formData).then((response)=>{
           Loading.hide();
           let resp = response.data;
           console.log("上传文件成功：", resp);

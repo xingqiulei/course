@@ -99,6 +99,22 @@
                         <ul id="tree" class="ztree"></ul>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">封面</label>
+                    <div class="col-sm-10">
+                        <big-file v-bind:input-id="'image-upload'"
+                                  v-bind:text="'上传封面'"
+                                  v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                                  v-bind:use="FILE_USE.COURSE.key"
+                                  v-bind:after-upload="afterUpload"></big-file>
+                        <div v-show="course.image" class="row">
+                            <div class="col-md-6">
+                                <img v-bind:src="course.image" class="img-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">名称</label>
                   <div class="col-sm-10">
@@ -131,12 +147,7 @@
                     <input v-model="course.price" class="form-control" >
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">封面</label>
-                  <div class="col-sm-10">
-                    <input v-model="course.image" class="form-control" >
-                  </div>
-                </div>
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label">级别</label>
                     <div class="col-sm-10">
@@ -183,7 +194,7 @@
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-      <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">
+      <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog" style="overflow: auto">
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                   <div class="modal-header">
@@ -228,14 +239,17 @@
 
 <script>
   import Pagination from "../../components/pagination";
+  import File from "../../components/file";
+  import BigFile from "../../components/big-file";
   export default {
-    components: {Pagination},
+    components: {BigFile, Pagination},
     name: "business-course",
     data: function() {
       return {
         COURSE_LEVEL: COURSE_LEVEL,
         COURSE_CHARGE: COURSE_CHARGE,
         COURSE_STATUS: COURSE_STATUS,
+          FILE_USE: FILE_USE,
         courses: [],
         saveContentLabel: "",
         course: {},
@@ -419,6 +433,15 @@
             _this.$router.push("/business/chapter");
         },
 
+        /**
+         * 点击【内容】
+         */
+        toContent(course) {
+            let _this = this;
+            SessionStorage.set(SESSION_KEY_COURSE, course);
+            _this.$router.push("/business/content");
+        },
+
 
         openSortModal(course) {
             let _this = this;
@@ -460,6 +483,11 @@
                 let resp = response.data;
                 _this.teachers = resp.content;
             })
+        },
+        afterUpload(resp) {
+            let _this = this;
+            let image = resp.content.path;
+            _this.course.image = image;
         },
 
     }
